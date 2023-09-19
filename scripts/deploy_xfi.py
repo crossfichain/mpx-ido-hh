@@ -1,17 +1,15 @@
 from brownie import *
-from brownie.network import priority_fee
 
-def main(is_need_to_publish = True):
-	priority_fee("auto")
-	mnemonik = ""
-	accounts.from_mnemonic(mnemonik)
+import os
+from dotenv import load_dotenv
+load_dotenv()
+
+def main():
+	accounts.from_mnemonic(os.getenv("mnemonic"))
 	account = accounts[0]
 
-	usdt = ""
-	team = ""     # team address
+	token = Token.deploy("test", "test", 2e26, {"from": account}) # token for test purposes. should change to test mpx
 
-	token = Token.deploy("name", "symbol", 2e26, {"from": account}, publish_source=is_need_to_publish) # token for test purposes.
+	vault = MpxVault.deploy(token.address, {"from": account}) # mpx giver contract.
 
-	# crowdsale = Crowdsale.deploy(usdt, 10, team, {"from": account}, publish_source=is_need_to_publish) # mpx seller contract.
-
-	vault = MpxVault.deploy(token.address, {"from": account}, publish_source=is_need_to_publish) # mpx giver contract.
+	# need to fill vault with tokens.

@@ -23,17 +23,6 @@ networks:
         default_contract_owner: true
         cmd_settings: null
 
-    goerli:
-        "host": "http://goerli.infura.io/v3/$process.env.WEB3_INFURA_PROJECT_ID"
-        gas_limit: auto
-        gas_buffer: 1
-        gas_price: auto
-        max_fee: null
-        priority_fee: null
-        reverting_tx_gas_limit: false
-        default_contract_owner: false
-        explorer: "https://api-goerli.etherscan.io/$ETHERSCAN_TOKEN"
-
     ethereum/develop:
         "host": "http://kovan.infura.io/v3/$process.env.WEB3_INFURA_PROJECT_ID"
         gas_limit: auto
