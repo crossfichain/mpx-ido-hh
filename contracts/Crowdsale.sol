@@ -2,9 +2,8 @@ pragma solidity 0.8.13;
 
 
 import "@OpenZeppelin/contracts/token/ERC20/IERC20.sol";
-import "@OpenZeppelin/contracts/access/Ownable.sol";
 
-contract Crowdsale is Ownable
+contract Crowdsale
 {
 	IERC20 public stablecoin;
 
