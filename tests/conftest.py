@@ -20,14 +20,6 @@ def crowdsale(accounts, Crowdsale, tokens):
 
 	return crowdsale
 
-@pytest.fixture(scope="module")
-def mpxVault(MpxVault, accounts, tokens):
-	(mpx, stablecoin) = tokens
-
-	vault = MpxVault.deploy(mpx.address, {"from": accounts[0]})
-	mpx.transfer(vault, 1e25, {"from": accounts[0]})
-
-	return vault
 
 @pytest.fixture(scope="module")
 def tokens(accounts, Token):
