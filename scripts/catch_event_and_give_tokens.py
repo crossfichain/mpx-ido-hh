@@ -12,7 +12,10 @@ def main():
 	spentAmount = 10e18 # 10000000000000000000
 	anotherAddress = "0x090BD9F68670FA4788BE057fBD55F05ecD7Da5b9"
 
-	startBlock = web3.eth.blockNumber
+	f = open("lastBlock.txt", "r")
+
+	startBlock = int((f.readline()))
+	print(startBlock)
 	endBlock = 0
 
 	# repeat everything.
@@ -26,7 +29,11 @@ def main():
 		# token.approve(crowdsale, spentAmount, {"from": account})
 		# crowdsale.buyTokens(anotherAddress, spentAmount, {"from": account})
 
-		endBlock = web3.eth.blockNumber # last block to scan for events.
+		# last block to scan for events.
+		if web3.eth.blockNumber > startBlock + 500:
+			endBlock = startBlock + 500
+		else:
+			endBlock = web3.eth.blockNumber
 
 		# get all events from start to last block.
 		event = crowdsale.events.get_sequence(from_block=startBlock, to_block=endBlock, event_type="BoughtTokens")
@@ -47,6 +54,10 @@ def main():
 		print(web3.eth.blockNumber)
 
 		startBlock = web3.eth.blockNumber + 1
+
+		f = open("lastBlock.txt", "w")
+		f.write(str(startBlock))
+		f.close()
 
 	### disconnect and connect to xfi.
 		brownie.network.disconnect()
