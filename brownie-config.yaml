@@ -11,7 +11,6 @@ dotenv: .env
 
 networks:
     default: development
-    ETHERSCAN_TOKEN : = $process.env.ETHERSCAN_TOKEN
 
     development:
         gas_limit: max
@@ -21,18 +20,9 @@ networks:
         priority_fee: null
         reverting_tx_gas_limit: max
         default_contract_owner: true
-        cmd_settings: null
-
-    ethereum/develop:
-        "host": "http://kovan.infura.io/v3/$process.env.WEB3_INFURA_PROJECT_ID"
-        gas_limit: auto
-        gas_buffer: 1
-        gas_price: auto
-        max_fee: null
-        priority_fee: null
-        reverting_tx_gas_limit: false
-        default_contract_owner: false
-        explorer: "https://api-kovan.etherscan.io/$ETHERSCAN_TOKEN"
+        cmd_settings:
+          unlock:
+            - 0x6B175474E89094C44Da98b954EedeAC495271d0F
 
     live:
         gas_limit: auto
@@ -51,7 +41,9 @@ compiler:
       enabled: true
       runs: 1500
     remappings: 
-      - "@OpenZeppelin=OpenZeppelin/openzeppelin-contracts@4.8.0"
+      - "@OpenZeppelin=OpenZeppelin/openzeppelin-contracts@4.9.3"
+      - "@uniswap/v3-core=Uniswap/v3-core@6562c52e8f75f0c10f9deaf44861847585fc8129"
+      - "@uniswap/v3-periphery=Uniswap/v3-periphery@b325bb0905d922ae61fcc7df85ee802e8df5e96c"
   vyper:
     version: null
 
@@ -81,6 +73,8 @@ hypothesis:
 
 autofetch_sources: false
 dependencies:
- - OpenZeppelin/openzeppelin-contracts@4.8.0
+ - OpenZeppelin/openzeppelin-contracts@4.9.3
+ - Uniswap/v3-core@6562c52e8f75f0c10f9deaf44861847585fc8129
+ - Uniswap/v3-periphery@b325bb0905d922ae61fcc7df85ee802e8df5e96c
 dev_deployment_artifacts: falsebro
 

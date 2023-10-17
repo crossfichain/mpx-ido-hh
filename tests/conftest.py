@@ -16,7 +16,14 @@ def isolate(fn_isolation):
 def crowdsale(accounts, Crowdsale, tokens):
 	(mpx, stablecoin) = tokens
 
-	crowdsale = Crowdsale.deploy(stablecoin, 10, accounts[3], {"from": accounts[0]})
+	crowdsale = Crowdsale.deploy(stablecoin, 10, accounts[3], "0x1F98431c8aD98523631AE4a59f267346ea31F984", {"from": accounts[0]})
+
+	return crowdsale
+
+@pytest.fixture(scope="module")
+def crowdsaleFork(accounts, Crowdsale):
+	stablecoin = "0xdAC17F958D2ee523a2206206994597C13D831ec7"
+	crowdsale = Crowdsale.deploy(stablecoin, 10, accounts[3], "0x1F98431c8aD98523631AE4a59f267346ea31F984", {"from": accounts[0]})
 
 	return crowdsale
 
