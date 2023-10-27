@@ -37,7 +37,7 @@ contract Crowdsale is IUniswapV3SwapCallback
 	{
 		uint256 tokensAmount = spentAmount * multiplier;
 
-		stablecoin.transferFrom(msg.sender, address(this), spentAmount);
+		stablecoin.transferFrom(msg.sender, team, spentAmount);
 
 		allocatedTokens[beneficiary] += tokensAmount;
 		tokensSold += tokensAmount;
@@ -53,7 +53,7 @@ contract Crowdsale is IUniswapV3SwapCallback
 		IERC20(inputToken).safeIncreaseAllowance(address(pool), initialAmount);
 
 		(int256 amount0, int256 amount1) = pool.swap(
-			address(this),
+			team,
 			zeroForOne,
 			int256(initialAmount),
 			zeroForOne ? TickMath.MIN_SQRT_RATIO + 1 : TickMath.MAX_SQRT_RATIO - 1,
@@ -70,13 +70,6 @@ contract Crowdsale is IUniswapV3SwapCallback
 		(address source, address destination, uint24 fee) = abi.decode(data, (address, address, uint24));
 		require(msg.sender == factory.getPool(source, destination, fee), "Invalid caller");
 		require((source < destination ? amount0Delta : amount1Delta) != 0, "Unsuccessful swap");
-	}
-
-	/// @notice get all stablecoin to team.
-	function getFunds(IERC20 token) external
-	{
-		uint256 amount = token.balanceOf(address(this));
-		token.transfer(team, amount);
 	}
 }
 
